@@ -1,10 +1,19 @@
 export default function Footer() {
   return (
-    <footer>
+    <footer className="footer">
       <small>
-        &copy; Cpoyright by ByteGrad. Intended for Learning or for Portfolio
+        <p>
+          &copy; Copyright by{" "}
+          <a target="_blank" href="https://www.bytegrad.com">
+            ByteGrad.com
+          </a>{" "}
+          Intended for Learning or for Portfolio
+        </p>
+        <p>
+          <span className="u-bold u-italic">Not allowed </span> to use as your
+          own teaching material.
+        </p>
       </small>
-      <p>Not allowed to use as your own teaching material.</p>
     </footer>
   );
 }
