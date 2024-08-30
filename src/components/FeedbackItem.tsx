@@ -6,14 +6,14 @@ export default function FeedbackItem({feedBackItem}: FeedBackItemProps) {
     <li className="feedback">
       <button>
         <TriangleUpIcon />
-        <span>{feedBackItem.upvotes}</span>
+        <span>{feedBackItem.upvoteCount}</span>
       </button>
       <div>
-        <p>{feedBackItem.symbol}</p>
+        <p>{feedBackItem.badgeLetter}</p>
       </div>
       <div>
-        <p>{feedBackItem.companyName}</p>
-        <p>{feedBackItem.comment}</p>
+        <p>{feedBackItem.company}</p>
+        <p>{feedBackItem.text}</p>
       </div>
       <p>{feedBackItem.daysAgo}d</p>
     </li>
