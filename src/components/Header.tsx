@@ -3,13 +3,17 @@ import Logo from "./Logo";
 import PageHeading from "./PageHeading";
 import Pattern from "./Pattern";
 
-export default function Header() {
+export default function Header({
+  handleAddItem,
+}: {
+  handleAddItem: (text: string) => void;
+}) {
   return (
     <header>
       <Pattern />
       <Logo />
       <PageHeading />
-      <FeedbackForm />
+      <FeedbackForm handleAddItem={handleAddItem} />
     </header>
   );
 }

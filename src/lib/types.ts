@@ -1,4 +1,4 @@
-export type FeedBackItem = {
+export type TFeedBackItem = {
   upvoteCount: number;
   badgeLetter: string;
   company: string;
@@ -7,4 +7,11 @@ export type FeedBackItem = {
   daysAgo: number;
 };
 
-export type FeedBackItemProps = { feedBackItem: FeedBackItem };
+export type FeedBackItemProps = {
+  feedBackItem: TFeedBackItem;
+};
+export type FeedBackListProps = {
+  feedBackList: TFeedBackItem[];
+  isLoading: boolean;
+  errorMessage: string;
+};
