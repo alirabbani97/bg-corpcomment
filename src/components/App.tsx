@@ -8,8 +8,23 @@ function App() {
   const [feedBackList, setFeedBackList] = useState<TFeedBackItem[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const [hashtags, setHashtags] = useState<string[]>([]);
+
+  useEffect(() => {
+    const hashtagsList = feedBackList.map(
+      (item: TFeedBackItem) => item.company
+    );
+
+    const filteredList = hashtagsList
+      .map((item) => item.toLowerCase())
+      .filter((item, index, array) => array.indexOf(item) === index)
+      .map((item) => {
+        const tag = item.charAt(0).toUpperCase() + item.substring(1);
+        return tag;
+      });
+
+    setHashtags(filteredList);
+  }, [feedBackList]);
 
   const handleAddItem = (text: string) => {
     const companyName = text
@@ -42,7 +57,7 @@ function App() {
         const data = await response.json();
 
         setFeedBackList(data.feedbacks);
-        setHashtags(data.feedbacks.map((item: TFeedBackItem) => item.company));
+
         setIsLoading(false);
         setErrorMessage("");
       } catch (error) {
