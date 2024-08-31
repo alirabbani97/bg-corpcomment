@@ -1,15 +1,11 @@
-export default function HashtagList() {
+export default function HashtagList({ hashtags }: { hashtags: string[] }) {
   return (
     <ul className="hashtags">
-      <li>
-        <button>#ByteGrad</button>
-      </li>
-      <li>
-        <button>#Quice</button>
-      </li>
-      <li>
-        <button>#Ali</button>
-      </li>
+      {hashtags.map((hashtag) => (
+        <li key={hashtag}>
+          <button>#{hashtag}</button>
+        </li>
+      ))}
     </ul>
   );
 }

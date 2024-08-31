@@ -9,6 +9,8 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [hashtags, setHashtags] = useState<string[]>([]);
+
   const handleAddItem = (text: string) => {
     const companyName = text
       .split(" ")
@@ -40,6 +42,7 @@ function App() {
         const data = await response.json();
 
         setFeedBackList(data.feedbacks);
+        setHashtags(data.feedbacks.map((item: TFeedBackItem) => item.company));
         setIsLoading(false);
         setErrorMessage("");
       } catch (error) {
@@ -59,7 +62,7 @@ function App() {
         isLoading={isLoading}
         handleAddItem={handleAddItem}
       />
-      <HashtagList />
+      <HashtagList hashtags={hashtags} />
     </div>
   );
 }
