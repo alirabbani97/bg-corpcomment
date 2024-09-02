@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Container from "./Container";
-import Footer from "./Footer";
+import Container from "./layouts/Container";
+import Footer from "./layouts/Footer";
 import HashtagList from "./HashtagList";
 import { TFeedBackItem } from "../lib/types";
 
@@ -8,27 +8,25 @@ function App() {
   const [feedBackList, setFeedBackList] = useState<TFeedBackItem[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [hashtags, setHashtags] = useState<string[]>([]);
+  const [selectedCompany, setSelectedCompany] = useState("");
+  const companyList = feedBackList
+    .map((item: TFeedBackItem) => item.company)
+    .map((item) => item.toLowerCase())
+    .filter((item, index, array) => array.indexOf(item) === index)
+    .map((item) => {
+      const tag = item.charAt(0).toUpperCase() + item.substring(1);
+      return tag;
+    });
+  console.log(companyList);
+  const filteredfeedBackList: TFeedBackItem[] = selectedCompany
+    ? feedBackList.filter(
+        (item) => item.company.toLowerCase() == selectedCompany.toLowerCase()
+      )
+    : feedBackList;
 
-  useEffect(() => {
-    const hashtagsList = feedBackList.map(
-      (item: TFeedBackItem) => item.company
-    );
-
-    const filteredList = hashtagsList
-      .map((item) => item.toLowerCase())
-      .filter((item, index, array) => array.indexOf(item) === index)
-      .map((item) => {
-        const tag = item.charAt(0).toUpperCase() + item.substring(1);
-        return tag;
-      });
-
-    setHashtags(filteredList);
-  }, [feedBackList]);
-
-  const handleAddItem = (text: string) => {
+  const handleAddItem = async (text: string) => {
     const companyName = text
-      .split(" ")
+      .split(/[\s\n]+/)
       .find((word) => word.includes("#"))!
       .substring(1);
 
@@ -42,7 +40,23 @@ function App() {
     };
 
     setFeedBackList((prev) => [...prev, newItem]);
+    try {
+      const response = await fetch(
+        "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks",
+        {
+          method: "POST",
+          body: JSON.stringify(newItem),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        throw new Error();
+      }
+    } catch (error) {
+      setErrorMessage("Something went wrong");
+    }
   };
+
   useEffect(() => {
     const fetchFeedBacks = async () => {
       setIsLoading(true);
@@ -68,16 +82,21 @@ function App() {
     fetchFeedBacks();
   }, []);
 
+  const filterFeedbacks = (hashtag: string) => {
+    console.log(hashtag);
+    setSelectedCompany(hashtag);
+  };
+
   return (
     <div className="app">
       <Footer />
       <Container
-        feedBackList={feedBackList}
+        feedBackList={filteredfeedBackList}
         errorMessage={errorMessage}
         isLoading={isLoading}
         handleAddItem={handleAddItem}
       />
-      <HashtagList hashtags={hashtags} />
+      <HashtagList hashtags={companyList} filterFeedbacks={filterFeedbacks} />
     </div>
   );
 }

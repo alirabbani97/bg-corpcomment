@@ -1,7 +1,7 @@
-import {  FeedBackListProps } from "../lib/types";
+import { FeedBackListProps } from "../../lib/types";
 import FeedbackItem from "./FeedbackItem";
-import ErrorMessage from "./ErrorMessage ";
-import Spinner from "./Spinner";
+import ErrorMessage from "../ErrorMessage ";
+import Spinner from "../Spinner";
 
 export default function FeedbackList({
   feedBackList,

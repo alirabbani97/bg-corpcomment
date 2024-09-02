@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MAX_CHARACTERS } from "../lib/constants";
+import { MAX_CHARACTERS } from "../../lib/constants";
 
 export default function FeedbackForm({
   handleAddItem,
@@ -21,9 +21,11 @@ export default function FeedbackForm({
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    handleAddItem(text)
-    setText("")
+    handleAddItem(text);
+    setText("");
   }
+
+  
   return (
     <form className="form" onSubmit={handleSubmit}>
       <textarea
@@ -38,7 +40,7 @@ export default function FeedbackForm({
       </label>
       <div>
         <p className="u-italic">{charCount}</p>
-        <button >
+        <button>
           <span>Submit</span>
         </button>
       </div>

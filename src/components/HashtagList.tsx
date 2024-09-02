@@ -1,10 +1,16 @@
-export default function HashtagList({ hashtags }: { hashtags: string[] }) {
+import HashtagItem from "./HashtagItem";
+
+export default function HashtagList({
+  hashtags,
+  filterFeedbacks,
+}: {
+  hashtags: string[];
+  filterFeedbacks: (hashtag: string) => void;
+}) {
   return (
     <ul className="hashtags">
       {hashtags.map((hashtag) => (
-        <li key={hashtag}>
-          <button>#{hashtag}</button>
-        </li>
+        <HashtagItem key={hashtag} hashtag={hashtag} filterFeedbacks={filterFeedbacks} />
       ))}
     </ul>
   );

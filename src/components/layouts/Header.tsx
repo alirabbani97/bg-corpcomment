@@ -1,7 +1,7 @@
-import FeedbackForm from "./FeedbackForm";
-import Logo from "./Logo";
-import PageHeading from "./PageHeading";
-import Pattern from "./Pattern";
+import FeedbackForm from "../feedBacks/FeedbackForm";
+import Logo from "../Logo";
+import PageHeading from "../PageHeading";
+import Pattern from "../Pattern";
 
 export default function Header({
   handleAddItem,
