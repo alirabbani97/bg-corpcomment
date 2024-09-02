@@ -9,8 +9,15 @@ export default function HashtagList({
 }) {
   return (
     <ul className="hashtags">
+      <li>
+        <button onClick={() => filterFeedbacks("All")}>#All</button>
+      </li>
       {hashtags.map((hashtag) => (
-        <HashtagItem key={hashtag} hashtag={hashtag} filterFeedbacks={filterFeedbacks} />
+        <HashtagItem
+          key={hashtag}
+          hashtag={hashtag}
+          filterFeedbacks={filterFeedbacks}
+        />
       ))}
     </ul>
   );

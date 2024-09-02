@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Container from "./layouts/Container";
 import Footer from "./layouts/Footer";
 import HashtagList from "./HashtagList";
@@ -8,21 +8,31 @@ function App() {
   const [feedBackList, setFeedBackList] = useState<TFeedBackItem[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCompany, setSelectedCompany] = useState("");
-  const companyList = feedBackList
-    .map((item: TFeedBackItem) => item.company)
-    .map((item) => item.toLowerCase())
-    .filter((item, index, array) => array.indexOf(item) === index)
-    .map((item) => {
-      const tag = item.charAt(0).toUpperCase() + item.substring(1);
-      return tag;
-    });
-  console.log(companyList);
-  const filteredfeedBackList: TFeedBackItem[] = selectedCompany
-    ? feedBackList.filter(
-        (item) => item.company.toLowerCase() == selectedCompany.toLowerCase()
-      )
-    : feedBackList;
+  const [selectedCompany, setSelectedCompany] = useState("All");
+  const companyList = useMemo(
+    () =>
+      feedBackList
+        .map((item: TFeedBackItem) => item.company)
+        .map((item) => item.toLowerCase())
+        .filter((item, index, array) => array.indexOf(item) === index)
+        .map((item) => {
+          const tag = item.charAt(0).toUpperCase() + item.substring(1);
+          return tag;
+        }),
+    [feedBackList]
+  );
+
+  const filteredfeedBackList: TFeedBackItem[] = useMemo(
+    () =>
+      selectedCompany !== "All"
+        ? feedBackList.filter(
+            (item) =>
+              item.company.toLowerCase() == selectedCompany.toLowerCase()
+          )
+        : feedBackList,
+
+    [feedBackList, selectedCompany]
+  );
 
   const handleAddItem = async (text: string) => {
     const companyName = text
@@ -84,6 +94,9 @@ function App() {
 
   const filterFeedbacks = (hashtag: string) => {
     console.log(hashtag);
+    if (hashtag === "All") {
+      setSelectedCompany("All");
+    }
     setSelectedCompany(hashtag);
   };
 
@@ -96,7 +109,10 @@ function App() {
         isLoading={isLoading}
         handleAddItem={handleAddItem}
       />
-      <HashtagList hashtags={companyList} filterFeedbacks={filterFeedbacks} />
+      <HashtagList
+        hashtags={companyList}
+        filterFeedbacks={filterFeedbacks}
+      />
     </div>
   );
 }
