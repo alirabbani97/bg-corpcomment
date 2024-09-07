@@ -9,8 +9,8 @@ type Store = {
   errorMessage: string;
   isLoading: boolean;
   selectCompany: (text: string) => void;
-  addFeedback:(text: string) => void;
-  fetchFeedbacks: ()=>void;
+  addFeedback: (text: string) => Promise<void>;
+  fetchFeedbacks: () => Promise<void>;
 };
 
 export const useFeedbackItemsStore = create<Store>((set, get) => ({
