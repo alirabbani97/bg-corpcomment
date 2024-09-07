@@ -4,13 +4,12 @@ import { useState } from "react";
 
 export default function FeedbackItem({ feedBackItem }: FeedBackItemProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
 
   const [upvoteCount, setUpVoteCount] = useState(feedBackItem.upvoteCount);
 
   const handleUpVote = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setUpVoteCount((prev) => ++prev);
-    setIsDisabled(true);
+    e.currentTarget.disabled = true;
     e.stopPropagation();
   };
 
@@ -19,7 +18,7 @@ export default function FeedbackItem({ feedBackItem }: FeedBackItemProps) {
       onClick={() => setIsOpen((prev) => !prev)}
       className={`feedback  ${isOpen ? " feedback--expand" : ""}`}
     >
-      <button disabled={isDisabled} onClick={handleUpVote}>
+      <button onClick={handleUpVote}>
         <TriangleUpIcon />
         <span>{upvoteCount}</span>
       </button>

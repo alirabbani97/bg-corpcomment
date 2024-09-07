@@ -1,15 +1,15 @@
 type HashtagItemProps = {
   hashtag: string;
-  filterFeedbacks: (hashtag: string) => void;
+  onFilterFeedbacks: (hashtag: string) => void;
 };
 
 export default function HashtagItem({
   hashtag,
-  filterFeedbacks,
+  onFilterFeedbacks,
 }: HashtagItemProps) {
   return (
     <li>
-      <button onClick={() => filterFeedbacks(hashtag)}>#{hashtag}</button>
+      <button onClick={() => onFilterFeedbacks(hashtag)}>#{hashtag}</button>
     </li>
   );
 }
