@@ -40,7 +40,6 @@ export const useFeedbackItemsStore = create<Store>((set, get) => ({
   selectedCompany: "All",
 
   selectCompany: (hashtag) => {
-    console.log(hashtag);
     if (hashtag === "All") {
       set(() => ({ selectedCompany: "All" }));
     }
